@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon premier Site React</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+
+        class Welcome extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = { d: new Date(), inp: "salut", aff: false }
+            }
+            componentDidMount() {
+                this.time = setInterval(this.chgDate.bind(this), 500)
+            }
+            componentWillUnmount() {
+                clearInterval(this.time)
+            }
+            chgDate() {
+                this.setState({ d: new Date() })
+            }
+            chgInp(event) {
+                // console.log(event.target.value)
+                this.setState({ inp: event.target.value })
+            }
+            clickBtn() {
+                this.setState({ aff: !this.state.aff })
+            }
+            gereAff() {
+                if (this.state.aff == true) {
+                    return <p>On affiche</p>
+                }
+                else {
+                    return ""
+                }
+            }
+            render() {
+                return (
+                    <div>
+                        <p>Bonjour, {this.state.inp}</p>
+                        <p>Il est {this.state.d.toLocaleTimeString()}</p>
+                        {this.gereAff()}
+                        <input type="text" value={this.state.inp} onChange={this.chgInp.bind(this)} />
+                        <button onClick={this.clickBtn.bind(this)}>Affiche</button>
+                    </div>
+                )
+            }
+        }
+        let texte = (
+            <div>
+                <h1>Bonjour le monde !</h1>
+                <Welcome name="Julien" lastName="DEMETTRE">Salut</Welcome>
+                <Welcome name="Virginie"></Welcome>
+                <Welcome name="Tayyib"></Welcome>
+            </div>
+        )
+
+        ReactDOM.render(texte, document.getElementById('app'))
+    </script>
+</body>
+
+</html>
